@@ -23,11 +23,6 @@ public class ProductRepository(ApplicationDbContext dbContext) : IProductReposit
     {
         var product = await dbContext.Products.FindAsync([id], cancellationToken);
 
-        if (product == null)
-        {
-            throw new ArgumentException($"Product with ID: {id} not found.");
-        }
-
         return product;
     }
 
