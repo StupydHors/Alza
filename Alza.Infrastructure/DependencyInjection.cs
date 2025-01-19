@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,7 @@ namespace Infrastructure;
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
-        ConfigurationManager builderConfiguration, Assembly mainAssembly)
+        ConfigurationManager builderConfiguration)
     {
         var connectionString = builderConfiguration.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value;
 

@@ -1,4 +1,3 @@
-using System.Reflection;
 using Application;
 using Application.Interfaces;
 using Domain.Entities;
@@ -10,33 +9,63 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddInfrastructure(builder.Configuration, Assembly.GetExecutingAssembly());
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
-
 app.MapGet("/products", async (IProductRepository productRepository) =>
     {
         var all = await productRepository.GetAll();
+
         return all;
     })
     .WithName("GetAllProducts")
     .WithOpenApi();
 
+app.MapGroup("/v2").MapGet("/products", async (IProductRepository productRepository, [FromQuery] int pageNumber, [FromQuery] int? pageSize) =>
+    {
+        var pagedProducts = await productRepository.GetPaged(pageNumber, pageSize ?? 10);
+
+        return pagedProducts;
+    })
+    .WithName("GetAllProductsV2")
+    .WithOpenApi();
+
 app.MapPost("/products", async ([FromBody] Product product, IProductRepository productRepository) =>
     {
-        await productRepository.Add(product);
+        return await productRepository.Add(product);
     })
     .WithName("InsertProduct")
+    .WithOpenApi();
+
+app.MapGet("/products/{id}", async ([FromQuery] Guid id, IProductRepository productRepository) =>
+    {
+        var product = await productRepository.GetById(id);
+
+        return product;
+    })
+    .WithName("GetProductById")
+    .WithOpenApi();
+
+app.MapDelete("/products/{id}", async ([FromQuery] Guid id, IProductRepository productRepository) =>
+    {
+        await productRepository.DeleteById(id);
+    })
+    .WithName("DeleteProduct")
+    .WithOpenApi();
+
+app.MapPut("/products/{id}", async ([FromQuery] Guid id, [FromBody] string? description, IProductRepository productRepository) =>
+    {
+        await productRepository.UpdateDescription(id, description);
+    })
+    .WithName("UpdateProduct")
     .WithOpenApi();
 
 app.Run();
