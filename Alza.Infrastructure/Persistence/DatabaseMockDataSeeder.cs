@@ -1,14 +1,16 @@
-﻿using Bogus;
+﻿using Application.Interfaces;
+using Bogus;
 using Domain.Entities;
 
 namespace Infrastructure.Persistence;
 
-public class DatabaseMockDataSeeder(ApplicationDbContext context)
+public class DatabaseMockDataSeeder(IProductRepository productRepository)
 {
     public async Task SeedAsync()
     {
         // Only seed if the database is empty
-        if (context.Products.Any())
+        var allProducts = await productRepository.GetAll();
+        if (allProducts.Any())
         {
             return;
         }
@@ -16,8 +18,10 @@ public class DatabaseMockDataSeeder(ApplicationDbContext context)
         var productGenerator = GetProductGenerator();
         var products = productGenerator.Generate(100);
 
-        await context.Products.AddRangeAsync(products);
-        await context.SaveChangesAsync();
+        foreach (var product in products)
+        {
+            await productRepository.Add(product);
+        }
     }
 
     private static Faker<Product> GetProductGenerator()

@@ -14,10 +14,17 @@ public static class DependencyInjection
     {
         var connectionString = builderConfiguration.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value;
 
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseNpgsql(connectionString));
+        if (bool.TryParse(builderConfiguration.GetSection("UseInMemoryDatabase").Value ?? "false", out var useInMemoryDb) && useInMemoryDb)
+        {
+            services.AddSingleton<IProductRepository, InMemoryProductRepository>();
+        }
+        else
+        {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(connectionString));
 
-        services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+        }
 
         services.AddScoped<DatabaseMockDataSeeder>();
 

@@ -15,7 +15,7 @@ builder.Services.AddApplication();
 
 var app = builder.Build();
 
-if (args.Contains("--seed"))
+if (bool.TryParse(builder.Configuration.GetSection("TryGenerateBogusData").Value ?? "false", out var seedWithBogusData) && seedWithBogusData)
 {
     await app.SeedDataAsync();
 }
