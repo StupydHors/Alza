@@ -1,3 +1,4 @@
+using System.Reflection;
 using Api;
 using Application;
 using Infrastructure;
@@ -6,7 +7,12 @@ using Infrastructure.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(
+    x =>
+    {
+        string xmlFilename = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
+        x.IncludeXmlComments(xmlFilename);
+    });
 
 builder.Services.AddControllers();
 
