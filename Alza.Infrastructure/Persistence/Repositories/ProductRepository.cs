@@ -36,6 +36,7 @@ public class ProductRepository(ApplicationDbContext dbContext) : IProductReposit
         var items = await dbContext.Products
             .Skip(pageNumber * pageSize)
             .Take(pageSize)
+            .OrderBy(p => p.CreatedAt)
             .ToListAsync(cancellationToken);
 
         return items;

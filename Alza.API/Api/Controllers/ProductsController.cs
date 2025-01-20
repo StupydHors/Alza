@@ -2,10 +2,10 @@
 using Application.Products.Commands;
 using Application.Products.Queries;
 using Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Alza.Api.Controllers;
+namespace Api.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

@@ -1,5 +1,7 @@
+using Api;
 using Application;
 using Infrastructure;
+using Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,11 @@ builder.Services.AddApplication();
 
 var app = builder.Build();
 
+if (args.Contains("--seed"))
+{
+    await app.SeedDataAsync();
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -22,3 +29,17 @@ if (app.Environment.IsDevelopment())
 app.MapControllers();
 
 app.Run();
+
+
+namespace Api
+{
+    public static class SeederExtensions
+    {
+        public static async Task SeedDataAsync(this WebApplication app)
+        {
+            using var scope = app.Services.CreateScope();
+            var seeder = scope.ServiceProvider.GetRequiredService<DatabaseMockDataSeeder>();
+            await seeder.SeedAsync();
+        }
+    }
+}

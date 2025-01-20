@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250118134722_InitialMigration")]
+    [Migration("20250119210748_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -45,7 +45,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("character varying(2048)");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .ValueGeneratedOnUpdate()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")

@@ -31,7 +31,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .ValueGeneratedOnAdd();
 
         builder.Property(p => p.LastModifiedAt)
-            .IsRequired(false)
-            .ValueGeneratedOnUpdate();
+            .IsRequired(false);
     }
 }

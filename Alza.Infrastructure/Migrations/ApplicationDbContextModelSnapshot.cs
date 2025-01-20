@@ -42,7 +42,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("character varying(2048)");
 
                     b.Property<DateTime?>("LastModifiedAt")
-                        .ValueGeneratedOnUpdate()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.API", "Alza.API\Alza.API.csproj", "{EEAB8C0D-A07E-4895-AAB3-82BD3C29FC30}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.Api", "Alza.Api\Alza.Api.csproj", "{EEAB8C0D-A07E-4895-AAB3-82BD3C29FC30}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alza.Application", "Alza.Application\Alza.Application.csproj", "{49A06CFD-6440-4C81-8DEF-24C50EC112FB}"
 EndProject
@@ -17,6 +17,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{2F3A3AF2-B05A-437C-8437-A392D2FC0867}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{518383AD-F56F-42D5-9881-EAB6DA7E4A2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E65D9362-5988-4EF3-90BE-E9F08AD5F8C4}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
